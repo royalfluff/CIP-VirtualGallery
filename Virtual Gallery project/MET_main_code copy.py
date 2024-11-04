@@ -92,14 +92,15 @@ def set_up_tk(pil_im):
 
 
     
+def main():
+    search_results = search_objects(SEARCH_TERM)  # Finds all objects and limits results
+    im_url = find_url(search_results)  # Locates object ID from result data
 
-search_results = search_objects(SEARCH_TERM)  # Finds all objects and limits results
-im_url = find_url(search_results)  # Locates object ID from result data
-if im_url:
-    pil_im = load_im(im_url)  # Loads image using Pillow
-    set_up_tk(pil_im)  # Set up Tkinter window with the image
-else:
-    print("No image URL found.")
+    if im_url:
+        pil_im = load_im(im_url)  # Loads image using Pillow
+        set_up_tk(pil_im)  # Set up Tkinter window with the image
+    else:
+        print("No image URL found.")
 
-print("")
+    print("")
 
