@@ -98,6 +98,7 @@ def set_up_tk(url_list):
 
     current_index = [0]  # Mutable list to track current index
 
+
     def next_image(event=None): #Accept an event parameter for keyboard binding
         current_index[0]= (current_index[0]+1)% len(url_list)
         update_image(image_label,url_list, current_index)
@@ -107,6 +108,7 @@ def set_up_tk(url_list):
         update_image(image_label,url_list, current_index)
 
     update_image(image_label,url_list, current_index)
+
 
     #next controls
     next_button = tk.Button(root, text ="Next", command = next_image)
