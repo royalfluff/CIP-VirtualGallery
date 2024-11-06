@@ -56,6 +56,11 @@ def load_im(im_url):
     return im 
     
 def resize_image(im, max_width, max_height):
+
+    """
+    Resizes an image while maintaining its aspect ratio, then pastes it onto
+    a blank background of specified dimensions to ensure consistent display size.
+    """
  
     #Resize the image while maintaining aspect ratio.
     original_width, original_height = im.size
@@ -71,7 +76,18 @@ def resize_image(im, max_width, max_height):
     else:
         return im  # Return original if it fits
 
-    return im.resize((new_width, new_height), Image.LANCZOS)
+    resized_im =  im.resize((new_width, new_height), Image.LANCZOS)
+
+    #create a blank, black background
+    background = Image.new("RGB", (max_width, max_height), "black")
+
+    #center and paste the resized images onto the bg
+    x_offset= (max_width-new_width)//2
+    y_offset= (max_height-new_height)//2
+    background.paste(resized_im,(x_offset,y_offset))
+
+    return background
+
 
 def update_image(image_label,url_list, current_index):
     url = url_list[current_index[0]]
@@ -90,10 +106,15 @@ def set_up_tk(url_list):
     # Initialize the main window
     root = tk.Tk()
     root.title("Art Gallery")
-    root.geometry("1080x1080")  # Set the window size
+    root.geometry("1080x900")  # Set the window size
+    
+
+    #frame to hold the image
+    frame= tk.Frame(root, bd=5, relief = tk.SUNKEN)
+    frame.pack(pady=20)
 
     # Create a label to hold the image
-    image_label = tk.Label(root)
+    image_label = tk.Label(frame)
     image_label.pack()
 
     current_index = [0]  # Mutable list to track current index
@@ -109,15 +130,18 @@ def set_up_tk(url_list):
 
     update_image(image_label,url_list, current_index)
 
+    # Create a new frame for navigation buttons
+    nav_frame = tk.Frame(root)
+    nav_frame.pack(side="bottom",pady=20)
 
     #next controls
-    next_button = tk.Button(root, text ="Next", command = next_image)
-    next_button.pack(side=tk.RIGHT)
+    next_button = tk.Button(nav_frame, text ="Next Artwork", command = next_image)
+    next_button.pack(side=tk.RIGHT, padx=10)
     root.bind("<Right>", next_image)
 
     #prev controls
-    prev_button= tk.Button(root, text = "Previous", command = prev_image)
-    prev_button.pack(side=tk.LEFT)
+    prev_button= tk.Button(nav_frame, text = "Previous Artwork", command = prev_image)
+    prev_button.pack(side=tk.LEFT,padx=10)
     root.bind("<Left>", prev_image)
 
     root.mainloop()  # Start the Tkinter event loop
