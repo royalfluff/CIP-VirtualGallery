@@ -98,21 +98,27 @@ def set_up_tk(url_list):
 
     current_index = [0]  # Mutable list to track current index
 
-    def next_image():
+
+    def next_image(event=None): #Accept an event parameter for keyboard binding
         current_index[0]= (current_index[0]+1)% len(url_list)
         update_image(image_label,url_list, current_index)
 
-    def prev_image():
+    def prev_image(event=None): #Accept an event parameter for keyboard binding
         current_index[0]= (current_index[0]-1)% len(url_list)
         update_image(image_label,url_list, current_index)
 
     update_image(image_label,url_list, current_index)
 
+
+    #next controls
     next_button = tk.Button(root, text ="Next", command = next_image)
     next_button.pack(side=tk.RIGHT)
+    root.bind("<Right>", next_image)
 
+    #prev controls
     prev_button= tk.Button(root, text = "Previous", command = prev_image)
     prev_button.pack(side=tk.LEFT)
+    root.bind("<Left>", prev_image)
 
     root.mainloop()  # Start the Tkinter event loop
 
