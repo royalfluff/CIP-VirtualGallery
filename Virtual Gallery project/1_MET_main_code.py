@@ -9,7 +9,7 @@ import tkinter as tk
 API_SEARCH_BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1/search?"
 API_OBJECT_BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1/objects/"
 
-SEARCH_TERM= "person"
+SEARCH_TERM= "blue"
 SEARCH_LIMIT = 15
 
 #for images -
